@@ -34,11 +34,11 @@ public class BancoEvento {
             if (rs.next()) {
                 int id = rs.getInt("id_evento");
                 String nomeEvento = rs.getString("nome");
-                String lugar = rs.getString("lugar");
+                String local = rs.getString("local");
                 String data = rs.getString("data");
                 String descricao = rs.getString("descricao");
 
-                return new Evento(id, nomeEvento, lugar, data, descricao);
+                return new Evento(id, nomeEvento, local, data, descricao);
             }
         } catch (SQLException e) {
             System.err.println("Erro ao buscar evento por nome: " + e.getMessage());

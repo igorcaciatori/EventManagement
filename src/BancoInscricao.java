@@ -10,13 +10,13 @@ public class BancoInscricao {
         try (Connection con = database.getConexao()) {
 
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO inscricao (id_evento, id_participante) WHERE ?,?;");
+                    "INSERT INTO inscricao (id_evento, id_participante) VALUES (?,?);");
 
             ps.setInt(1, eventoId);
             ps.setInt(2, participanteId);
             ps.execute();
         } catch (SQLException e) {
-            System.err.println();
+            System.err.println(e.getMessage());
         }
     }
 

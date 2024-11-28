@@ -1,5 +1,7 @@
 import Exceptions.EventoInexistenteException;
 import Exceptions.EventoJaCadastradoException;
+import Exceptions.ParticipanteInexistenteException;
+import Exceptions.ParticipanteJaCadastradoException;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -18,7 +20,9 @@ public class Main {
             try {
                 executarOpcaoMenu(opcao);
             } catch (EventoInexistenteException |
-                     EventoJaCadastradoException e) {
+                     EventoJaCadastradoException |
+                    ParticipanteInexistenteException |
+                    ParticipanteJaCadastradoException e) {
 
                 System.out.println(e.getMessage());
             }
@@ -54,10 +58,26 @@ public class Main {
                 cadastroInscricao();
                 break;
             case 4:
-                buscarEvento();
+                Evento evento = buscarEvento();
+                System.out.println(
+                                "------------ EVENTO ------------" + "\n" +
+                                evento.getId() + "\n" +
+                                evento.getNome() + "\n" +
+                                evento.getLocal() + "\n" +
+                                evento.getData() + "\n" +
+                                evento.getDescricao() + "\n" +
+                                "--------------------------------"
+                );
                 break;
             case 5:
-                buscarParticipante();
+                Participante participante = buscarParticipante();
+                System.out.println(
+                        "------------ EVENTO ------------" + "\n" +
+                                participante.getId() + "\n" +
+                                participante.getNome() + "\n" +
+                                participante.getEmail() + "\n" +
+                                "--------------------------------"
+                );
                 break;
             case 6:
                 removerEvento();
@@ -107,8 +127,8 @@ public class Main {
 
     // D
     private static void removerEvento() {
-        Evento evento = buscarEvento();
-        bancoEvento.removerEvento(evento.getId());
+        System.out.println("ID do evento: ");
+        bancoEvento.removerEvento(sc.nextInt());
     }
 
     // CRUD DO PARTICIPANTE
@@ -120,7 +140,13 @@ public class Main {
         String nome = sc.nextLine();
         System.out.print("E-mail: ");
         String email = sc.nextLine();
-        bancoParticipante.adicionarParticipante(new Participante(nome, email));
+        try {
+            Participante participante = bancoParticipante.buscarParticipantePorEmail(email);
+        } catch (ParticipanteInexistenteException e) {
+            bancoParticipante.adicionarParticipante(new Participante(nome, email));
+            return;
+        }
+        throw new ParticipanteJaCadastradoException();
     }
 
     // R

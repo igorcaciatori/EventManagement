@@ -1,15 +1,15 @@
 public class Participante {
 
     private int id;
-    private String name;
+    private String nome;
     private String email;
 
-    public Participante(int id, String name, String email) {
-        this(name, email);
+    public Participante(int id, String nome, String email) {
+        this(nome, email);
         this.id = id;
     }
-    public Participante(String name, String email) {
-        this.name = name;
+    public Participante(String nome, String email) {
+        this.nome = nome;
         this.email = email;
     }
 
@@ -21,12 +21,12 @@ public class Participante {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
